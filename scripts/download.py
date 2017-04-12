@@ -4,7 +4,6 @@ from audio_set import parse_csv, download_loop
 
 DOWNLOADER = "~/.local/bin/youtube-dl"
 DOWNLOADER = os.path.expanduser(DOWNLOADER)
-DL_ARGS = ["-j", "-f", "bestaudio"]
 FFMPEG = 'ffmpeg'
 
 
