@@ -87,8 +87,8 @@ def parse_csv(csv_file):
     return records
 
 
-def download_loop(records, out_dir, log_file, n_workers=1, downloader=None, 
-                  ffmpeg=None):
+def download_records(records, out_dir, log_file, n_workers=1, downloader=None, 
+                     ffmpeg=None):
     if not downloader:
         downloader = 'youtube-dl'
     if not ffmpeg:

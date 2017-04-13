@@ -1,7 +1,7 @@
 import os
 import argparse
 
-from audio_set import parse_csv, download_loop
+from audio_set import parse_csv, download_records
 
 DOWNLOADER = "~/.local/bin/youtube-dl"
 DOWNLOADER = os.path.expanduser(DOWNLOADER)
@@ -10,7 +10,7 @@ FFMPEG = 'ffmpeg'
 
 def main(csv_file, out_dir, log_file, n_workers):
     records = parse_csv(csv_file)
-    download_loop(records, out_dir, log_file, n_workers, DOWNLOADER, FFMPEG)
+    download_records(records, out_dir, log_file, n_workers, DOWNLOADER, FFMPEG)
 
 
 if __name__ == "__main__":
