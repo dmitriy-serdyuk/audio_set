@@ -1,4 +1,6 @@
 from __future__ import print_function
+import _strptime
+from datetime import datetime
 import csv
 import os
 import random
@@ -53,7 +55,7 @@ class DownloadAudio(object):
         self.ydl = ydl
         self.ffmpeg = ffmpeg
 
-    def __call__(url, start, end, out_dir, *args, **kwargs):
+    def __call__(self, url, start, end, out_dir, *args, **kwargs):
         if (url + '.ogg') in os.listdir(out_dir):
             print('.. skip download')
             return
@@ -71,7 +73,7 @@ class DownloadAudio(object):
         print(out)
 
 
-def parse_scv(csv_file):
+def parse_csv(csv_file):
     records = []
     print('.. reading csv {}'.format(csv_file))
     with open(csv_file, 'rb') as f:
@@ -85,7 +87,7 @@ def parse_scv(csv_file):
     return records
 
 
-def download_loop(records, out_dir, n_workers=1, downloader=None, 
+def download_loop(records, out_dir, log_file, n_workers=1, downloader=None, 
                   ffmpeg=None):
     if not downloader:
         downloader = 'youtube-dl'
@@ -100,7 +102,7 @@ def download_loop(records, out_dir, n_workers=1, downloader=None,
         download_queue.put(record)
     audio_downloader = DownloadAudio(ydl, ffmpeg)
     with open(log_file, 'w') as log_file:
-        for i in n_workers:
+        for i in range(n_workers):
             thread = DownloadThread(
                 download_queue, out_dir, audio_downloader, log_file)
             thread.start()
